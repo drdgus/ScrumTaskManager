@@ -2,7 +2,7 @@
 {
     public interface IAuthorizationManager
     {
-        Task<bool> Login(string login, string password);
+        Task Login(string login, string password);
         event Action<bool> OnLogin;
     }
 }

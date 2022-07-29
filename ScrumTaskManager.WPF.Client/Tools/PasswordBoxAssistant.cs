@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace ScrumTaskManager.WPF.Client.Views
+namespace ScrumTaskManager.WPF.Client.Tools
 {
     public static class PasswordBoxAssistant
     {

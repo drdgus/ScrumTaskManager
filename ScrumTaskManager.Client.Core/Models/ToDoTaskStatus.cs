@@ -1,6 +1,6 @@
 ﻿namespace ScrumTaskManager.Client.Core.Models;
 
-public enum ToDoTaskState
+public enum ToDoTaskStatus
 {
     Stack,
     InWork,

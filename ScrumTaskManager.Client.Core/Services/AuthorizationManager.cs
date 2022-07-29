@@ -11,11 +11,10 @@ namespace ScrumTaskManager.Client.Core.Services
             _restClient = restClient;
         }
 
-        public async Task<bool> Login(string login, string password)
+        public async Task Login(string login, string password)
         {
             var res = await _restClient.Login(login, password);
             OnLogin?.Invoke(res);
-            return res;
         }
 
         public event Action<bool>? OnLogin;

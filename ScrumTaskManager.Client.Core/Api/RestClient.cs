@@ -4,6 +4,7 @@ using ScrumTaskManager.Client.Core.Models;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ScrumTaskManager.Client.Core.Api
 {
@@ -30,6 +31,46 @@ namespace ScrumTaskManager.Client.Core.Api
             {
                 return Array.Empty<ToDoTask>();
             }
+        }
+
+        public async Task UpdateTaskStatus(int taskId, ToDoTaskStatus status)
+        {
+            try
+            {
+                var request = new RestRequest("api/v1/tasks/updateStatus");
+                request.AddJsonBody(new
+                {
+                    Id = taskId,
+                    Status = status
+                });
+                var response = await restClient.PostAsync(request);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public async Task<ToDoTask> CreateTask(ToDoTask task)
+        {
+            try
+            {
+                var request = new RestRequest("api/v1/tasks/add");
+                request.AddJsonBody(task);
+                return await restClient.PostAsync<ToDoTask>(request);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+        }
+
+        public async Task DeleteTask(int taskId)
+        {
+            var request = new RestRequest("api/v1/tasks/delete");
+            request.AddBody(taskId);
+            await restClient.PostAsync(request);
         }
 
         public async Task<bool> Login(string login, string password)

@@ -1,6 +1,6 @@
 ﻿namespace ScrumTaskManager.Api.DAL.Entities;
 
-public enum ToDoTaskState
+public enum ToDoTaskStatus
 {
     Stack,
     InWork,

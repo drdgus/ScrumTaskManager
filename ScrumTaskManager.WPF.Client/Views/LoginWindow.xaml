@@ -5,12 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ScrumTaskManager.WPF.Client.Views"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
-    <Grid>
+        Height="300" Width="400"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:tools="clr-namespace:ScrumTaskManager.WPF.Client.Tools"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid Margin="16">
         <StackPanel>
-            <TextBox Text="{Binding Username}"/>
-            <PasswordBox local:PasswordBoxAssistant.BindPassword="true"  local:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Content="Войти" Command="{Binding LoginCommand}"/>
+            <TextBox
+                materialDesign:HintAssist.Hint="Логин"
+                materialDesign:HintAssist.FloatingScale="1"
+                Margin="0 4 0 0"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding Username}"
+                VerticalAlignment="Center" />
+            <PasswordBox
+                materialDesign:HintAssist.Hint="Пароль"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                materialDesign:HintAssist.FloatingScale="1"
+                Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                tools:PasswordBoxAssistant.BindPassword="true"  
+                tools:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <Button Content="Войти" Margin="0 16 0 0" Command="{Binding LoginCommand}"/>
         </StackPanel>
+        <materialDesign:Snackbar
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            MessageQueue="{Binding MessageQueue}" />
     </Grid>
 </Window>

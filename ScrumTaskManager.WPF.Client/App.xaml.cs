@@ -36,14 +36,21 @@ namespace ScrumTaskManager.WPF.Client
         {
             var loginWindow = new LoginWindow();
 
+#if !DEBUG
+            var authorizationManager = Services.GetRequiredService<IAuthorizationManager>();
+            authorizationManager.Login("Test", "Test");
+#endif
+
+#if DEBUG
+
             var authorizationManager = Services.GetRequiredService<IAuthorizationManager>();
             authorizationManager.OnLogin += successLogin =>
             {
                 if (successLogin)
                     loginWindow.Hide();
             };
-
             loginWindow.ShowDialog();
+#endif
 
             var mainWindow = new MainWindow();
             mainWindow.Show();

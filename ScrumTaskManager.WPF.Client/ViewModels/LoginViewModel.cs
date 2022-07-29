@@ -1,4 +1,6 @@
-﻿using Microsoft.Toolkit.Mvvm.ComponentModel;
+﻿using System;
+using MaterialDesignThemes.Wpf;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using ScrumTaskManager.Client.Core.Services;
 
@@ -11,14 +13,27 @@ public partial class LoginViewModel
     public string Username { get; set; }
     public string Password { get; set; }
 
+    public SnackbarMessageQueue MessageQueue { get; } = new SnackbarMessageQueue(TimeSpan.FromSeconds(3));
+
     public LoginViewModel(IAuthorizationManager authorizationManager)
     {
         _authorizationManager = authorizationManager;
     }
 
     [ICommand]
-    public void Login()
+    public async void Login()
     {
-        _authorizationManager.Login(Username, Password);
+        try
+        {
+            await _authorizationManager.Login(Username, Password);
+        }
+        catch (Exception e)
+        {
+            if(e.Message.Contains("Unauthorized"))
+                MessageQueue.Enqueue("Неверный логин или пароль");
+            else
+                MessageQueue.Enqueue(e.Message);
+        }
+       
     }
 }

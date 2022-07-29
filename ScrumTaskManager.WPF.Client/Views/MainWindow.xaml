@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:ScrumTaskManager.WPF.Client"
         xmlns:views="clr-namespace:ScrumTaskManager.WPF.Client.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="720" Width="1280"
+        Title="Задачник"
+        WindowStartupLocation="CenterScreen"
+        Height="720" Width="1280"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -15,84 +17,106 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
 
-        <Grid Margin="16 16 0 16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+    <Window.Resources>
+        <Style TargetType="views:ToDoTask">
+            <Setter Property="CommandParameter" Value="{Binding Id}"/>
+        </Style>
+    </Window.Resources>
 
-            <TextBlock Grid.Row="0" Text="К выполнению"/>
-            <ListView Grid.Row="1" ItemsSource="{Binding TasksStack}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <materialDesign:Card Padding="16">
+    <materialDesign:DialogHost
+        CloseOnClickAway="True"
+        DialogTheme="Inherit"
+        Identifier="RootDialog">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Margin="16 16 0 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="К выполнению"/>
+                <ListView Grid.Row="1" ItemsSource="{Binding TasksStack}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
                             <views:ToDoTask/>
-                        </materialDesign:Card>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
-        <Grid Grid.Column="1" Margin="16 16 0 16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid Grid.Column="1" Margin="16 16 0 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="В работе"/>
-            <ListView Grid.Row="1" ItemsSource="{Binding TasksInWork}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <materialDesign:Card Padding="16">
+                <TextBlock Grid.Row="0" Text="В работе"/>
+                <ListView Grid.Row="1" ItemsSource="{Binding TasksInWork}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
                             <views:ToDoTask/>
-                        </materialDesign:Card>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
-        <Grid Grid.Column="2" Margin="16 16 0 16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid Grid.Column="2" Margin="16 16 0 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Тестирование"/>
-            <ListView Grid.Row="1" ItemsSource="{Binding TasksInTests}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <materialDesign:Card Padding="16">
+                <TextBlock Grid.Row="0" Text="Тестирование"/>
+                <ListView Grid.Row="1" ItemsSource="{Binding TasksInTests}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
                             <views:ToDoTask/>
-                        </materialDesign:Card>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
 
-        <Grid Grid.Column="3" Margin="16 16 0 16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <Grid Grid.Column="3" Margin="16 16 0 16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Завершено"/>
-            <ListView Grid.Row="1" ItemsSource="{Binding CompletedTasks}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <materialDesign:Card Padding="16">
+                <TextBlock Grid.Row="0" Text="Завершено"/>
+                <ListView Grid.Row="1" ItemsSource="{Binding CompletedTasks}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
                             <views:ToDoTask/>
-                        </materialDesign:Card>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+            <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="16"
+                    Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
+                    Command="{Binding CreateTaskCommand}"
+                
+                    ToolTip="Добавить задачу">
+                <materialDesign:PackIcon Kind="Add" Width="36" Height="36"/>
+            </Button>
+
+            <materialDesign:Snackbar 
+                Margin="8"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                MessageQueue="{Binding MessageQueue}" />
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </Window>

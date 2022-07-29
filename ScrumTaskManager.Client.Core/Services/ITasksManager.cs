@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 namespace ScrumTaskManager.Client.Core.Services;
 public interface ITasksManager
 {
-    ObservableCollection<ToDoTask> TasksStack { get; }
-    ObservableCollection<ToDoTask> TasksInWork { get; }
-    ObservableCollection<ToDoTask> TasksInTests { get; }
-    ObservableCollection<ToDoTask> CompletedTasks { get; }
+    ObservableCollection<ToDoTask> Tasks { get; }
     Task GetTasks();
+    Task UpdateStatus(ToDoTask task);
+    Task CreateTask(ToDoTask task);
+    Task DeleteTask(ToDoTask task);
 }

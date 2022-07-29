@@ -1,5 +1,6 @@
 ﻿using ScrumTaskManager.Client.Core.Models;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using RestClient = ScrumTaskManager.Client.Core.Api.RestClient;
 
 namespace ScrumTaskManager.Client.Core.Services
@@ -7,10 +8,7 @@ namespace ScrumTaskManager.Client.Core.Services
     public class TasksManager : ITasksManager
     {
         private readonly RestClient _restClient;
-        public ObservableCollection<ToDoTask> TasksStack { get; } = new();
-        public ObservableCollection<ToDoTask> TasksInWork { get; } = new();
-        public ObservableCollection<ToDoTask> TasksInTests { get; } = new();
-        public ObservableCollection<ToDoTask> CompletedTasks { get; } = new();
+        public ObservableCollection<ToDoTask> Tasks { get; } = new();
 
         public TasksManager(RestClient restClient)
         {
@@ -19,24 +17,25 @@ namespace ScrumTaskManager.Client.Core.Services
 
         public async Task GetTasks()
         {
-            foreach (var task in await _restClient.GetTasks())
-            {
-                switch (task.State)
-                {
-                    case ToDoTaskState.Stack:
-                        TasksStack.Add(task);
-                        break;
-                    case ToDoTaskState.InWork:
-                        TasksInWork.Add(task);
-                        break;
-                    case ToDoTaskState.InTests:
-                        TasksInTests.Add(task);
-                        break;
-                    case ToDoTaskState.Done:
-                        CompletedTasks.Add(task);
-                        break;
-                }
-            }
+            var tasks = await _restClient.GetTasks();
+            foreach (var task in tasks) Tasks.Add(task);
+        }
+
+        public async Task UpdateStatus(ToDoTask task)
+        {
+            await _restClient.UpdateTaskStatus(task.Id, task.Status);
+        }
+
+        public async Task CreateTask(ToDoTask task)
+        {
+            var newTask = await _restClient.CreateTask(task);
+            Tasks.Add(newTask);
+        }
+
+        public async Task DeleteTask(ToDoTask task)
+        {
+            await _restClient.DeleteTask(task.Id);
+            Tasks.Remove(task);
         }
     }
 }

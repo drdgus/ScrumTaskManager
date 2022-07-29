@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ScrumTaskManager.Api.DAL;
+using ScrumTaskManager.Api.DAL.Entities;
 using ScrumTaskManager.Api.DAL.Repositories;
 using ScrumTaskManager.Api.Models;
 using ScrumTaskManager.Api.Services;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Authorization;
 using DbContext = ScrumTaskManager.Api.DAL.DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -117,8 +118,6 @@ string AuthenticateUser(LoginModel login, DbContext dbContext)
     return user != null ? user.Id : string.Empty;
 }
 
-
-
 app.MapGet("/api/v1/tasks", [Authorize] (HttpContext context, TasksRepository tasksRepository, JWTManager jwtManager) =>
 {
     var regex = new Regex("(?<=Bearer ).*");
@@ -128,5 +127,29 @@ app.MapGet("/api/v1/tasks", [Authorize] (HttpContext context, TasksRepository ta
     return Results.Ok(tasks);
 })
 .WithName("GetTasks");
+
+app.MapPost("/api/v1/tasks/updateStatus", [Authorize] async (TasksRepository tasksRepository, [FromBody] UpdateTaskStatusModel updateTaskStatusModel) =>
+{
+    await tasksRepository.UpdateStatus(updateTaskStatusModel.Id, updateTaskStatusModel.Status);
+    return Results.Ok();
+})
+.WithName("updateStatus");
+
+app.MapPost("/api/v1/tasks/add", [Authorize] async (HttpContext context, TasksRepository tasksRepository, JWTManager jwtManager, [FromBody] ToDoTask task) =>
+{
+    var regex = new Regex("(?<=Bearer ).*");
+    var token = regex.Match(context.Request.Headers.Authorization.First()).Value;
+    var userId = jwtManager.GetUserIdFromJWT(token);
+    var newTask = await tasksRepository.Add(task, userId);
+    return Results.Ok(newTask);
+})
+.WithName("AddTask");
+
+app.MapPost("/api/v1/tasks/delete", [Authorize] async (TasksRepository tasksRepository, [FromBody] int id) =>
+    {
+        await tasksRepository.Remove(id);
+        return Results.Ok();
+    })
+    .WithName("DeleteTask");
 
 app.Run();
