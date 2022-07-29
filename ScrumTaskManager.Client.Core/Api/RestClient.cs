@@ -4,7 +4,6 @@ using ScrumTaskManager.Client.Core.Models;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ScrumTaskManager.Client.Core.Api
 {

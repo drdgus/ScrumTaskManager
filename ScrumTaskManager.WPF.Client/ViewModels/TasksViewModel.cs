@@ -1,9 +1,9 @@
-﻿using System;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using Microsoft.Toolkit.Mvvm.Input;
 using ScrumTaskManager.Client.Core.Models;
 using ScrumTaskManager.Client.Core.Services;
 using ScrumTaskManager.WPF.Client.Views;
+using System;
 using System.ComponentModel;
 using System.Windows.Data;
 using ToDoTask = ScrumTaskManager.Client.Core.Models.ToDoTask;
@@ -17,7 +17,7 @@ public partial class TasksViewModel
     public ICollectionView TasksInWork { get; }
     public ICollectionView TasksInTests { get; }
     public ICollectionView CompletedTasks { get; }
-    public SnackbarMessageQueue MessageQueue { get; } = new (TimeSpan.FromSeconds(3));
+    public SnackbarMessageQueue MessageQueue { get; } = new(TimeSpan.FromSeconds(3));
 
     private ToDoTask? _newTask;
 
@@ -80,13 +80,13 @@ public partial class TasksViewModel
 
         if (res != null && (bool)res)
         {
-            
+
             try
             {
                 await _tasksManager.CreateTask(_newTask);
                 MessageQueue.Enqueue("Задача добавлена");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageQueue.Enqueue("Ошибка добавления. " + e.Message);
             }
@@ -113,7 +113,7 @@ public partial class TasksViewModel
         {
             MessageQueue.Enqueue("Ошибка удаления. " + e.Message);
         }
-       
+
         RefreshTaskLists();
     }
 

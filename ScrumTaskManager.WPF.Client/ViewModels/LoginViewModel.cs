@@ -1,8 +1,8 @@
-﻿using System;
-using MaterialDesignThemes.Wpf;
+﻿using MaterialDesignThemes.Wpf;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using ScrumTaskManager.Client.Core.Services;
+using System;
 
 namespace ScrumTaskManager.WPF.Client.ViewModels;
 [ObservableObject]
@@ -29,11 +29,11 @@ public partial class LoginViewModel
         }
         catch (Exception e)
         {
-            if(e.Message.Contains("Unauthorized"))
+            if (e.Message.Contains("Unauthorized"))
                 MessageQueue.Enqueue("Неверный логин или пароль");
             else
                 MessageQueue.Enqueue(e.Message);
         }
-       
+
     }
 }

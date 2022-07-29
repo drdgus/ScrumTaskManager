@@ -65,7 +65,7 @@
                 <TextBlock TextAlignment="Right" Text="{Binding Priority}"/>
             </DockPanel>
             <DockPanel Margin="0 16 0 0">
-                <TextBlock Text="Тэг:"/>
+                <TextBlock Text="Тег:"/>
                 <TextBlock TextAlignment="Right" Text="{Binding Name}"/>
             </DockPanel>
 

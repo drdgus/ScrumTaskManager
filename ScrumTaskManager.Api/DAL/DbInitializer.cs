@@ -26,7 +26,115 @@ namespace ScrumTaskManager.Api.DAL
 
             var rnd = new Random();
 
-            context.Tasks.AddRange(Enumerable.Range(1, 20).Select(i => new ToDoTask
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Не подгружаются теги",
+                Type = ToDoTaskType.Bug,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-1",
+                Description = string.Empty,
+                Priority = Priority.High,
+                TimeLimit = TimeSpan.FromHours(4),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Роли для пользователей",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-2",
+                Description = string.Empty,
+                Priority = Priority.Low,
+                TimeLimit = TimeSpan.FromHours(4),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Уведомления о назначенных или о подписанных задачах",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-3",
+                Description = string.Empty,
+                Priority = Priority.Low,
+                TimeLimit = TimeSpan.FromHours(4),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Бэклог",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-4",
+                Description = string.Empty,
+                Priority = Priority.Low,
+                TimeLimit = TimeSpan.FromHours(2),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Спринты",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-5",
+                Description = string.Empty,
+                Priority = Priority.Low,
+                TimeLimit = TimeSpan.FromHours(4),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Метки для типов задач",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-6",
+                Description = string.Empty,
+                Priority = Priority.Mid,
+                TimeLimit = TimeSpan.FromHours(1),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Метки для приоритета задачи",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-7",
+                Description = string.Empty,
+                Priority = Priority.Mid,
+                TimeLimit = TimeSpan.FromHours(1),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Интеграция с Git",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-8",
+                Description = string.Empty,
+                Priority = Priority.Low,
+                TimeLimit = TimeSpan.FromHours(4),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.Add(new ToDoTask
+            {
+                Header = "Передача задачи другому исполнителю",
+                Type = ToDoTaskType.Task,
+                Status = ToDoTaskStatus.Stack,
+                Name = "tsk-9",
+                Description = string.Empty,
+                Priority = Priority.Mid,
+                TimeLimit = TimeSpan.FromHours(2),
+                UserId = user.Entity.Id
+            });
+
+            context.Tasks.AddRange(Enumerable.Range(10, 20).Select(i => new ToDoTask
             {
                 Header = $"Задача {i}",
                 Type = (ToDoTaskType)rnd.Next(0, 2),

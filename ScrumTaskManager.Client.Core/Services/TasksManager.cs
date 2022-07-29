@@ -1,6 +1,5 @@
 ﻿using ScrumTaskManager.Client.Core.Models;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using RestClient = ScrumTaskManager.Client.Core.Api.RestClient;
 
 namespace ScrumTaskManager.Client.Core.Services
