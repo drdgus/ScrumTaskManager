@@ -13,7 +13,7 @@ namespace ScrumTaskManager.Client.Core.Api
 
         public RestClient()
         {
-            restClient = new RestSharp.RestClient("https://localhost:44424");
+            restClient = new RestSharp.RestClient("http://localhost:44423");
         }
 
         public async Task<IEnumerable<ToDoTask>> GetTasks()
