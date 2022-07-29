@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="ScrumTaskManager.WPF.Client.Views.TaskDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ScrumTaskManager.WPF.Client.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:System="clr-namespace:System;assembly=System.Runtime"
+             xmlns:model="clr-namespace:ScrumTaskManager.Client.Core.Models;assembly=ScrumTaskManager.Client.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" d:Background="White" MinWidth="800">
+
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="enumStatuses" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="model:ToDoTaskStatus"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+
+    <Grid Margin="16">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <WrapPanel>
+                <TextBlock Text="{Binding Type}"/>
+                <TextBlock Text="{Binding Name}" Margin="8 0 0 0"/>
+                <TextBlock  Text="{Binding Priority}" Margin="16 0 0 0"/>
+            </WrapPanel>
+            <TextBlock Grid.Row="1" FontSize="24" Margin="0 8 0 0" Text="{Binding Header}"/>
+
+            <TextBlock Grid.Row="2" Margin="0 16 0 0" Text="{Binding Description}" MinHeight="200" TextWrapping="Wrap"/>
+        </Grid>
+
+        <StackPanel Grid.Column="1" Margin="32 0 0 0">
+            <ComboBox
+                materialDesign:HintAssist.Hint="Статус"
+                materialDesign:HintAssist.FloatingScale="1"
+                materialDesign:HintAssist.HintOpacity=".26"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                 ItemsSource="{Binding Source={StaticResource enumStatuses}}"
+                 SelectedItem="{Binding Status}">
+            </ComboBox>
+            <DockPanel Margin="0 16 0 0">
+                <TextBlock Text="Лимит по времени:"/>
+                <TextBlock TextAlignment="Right" Text="{Binding TimeLimit}"/>
+            </DockPanel>
+            <DockPanel Margin="0 16 0 0">
+                <TextBlock Text="Тип:"/>
+                <TextBlock TextAlignment="Right" Text="{Binding Type}"/>
+            </DockPanel>
+            <DockPanel Margin="0 16 0 0">
+                <TextBlock Text="Приоритет:"/>
+                <TextBlock TextAlignment="Right" Text="{Binding Priority}"/>
+            </DockPanel>
+            <DockPanel Margin="0 16 0 0">
+                <TextBlock Text="Тег:"/>
+                <TextBlock TextAlignment="Right" Text="{Binding Name}"/>
+            </DockPanel>
+
+            <Button 
+                Content="Удалить" 
+                Background="#fe4e46" 
+                BorderBrush="{x:Null}" 
+                Margin="0 16 0 0" 
+                Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.DeleteTaskCommand}"
+                CommandParameter="{Binding }"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

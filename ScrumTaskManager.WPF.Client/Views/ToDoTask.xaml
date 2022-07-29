@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ScrumTaskManager.WPF.Client.Views.ToDoTask"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ScrumTaskManager.WPF.Client.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:Background="white" Width="240"  d:DesignWidth="800" MouseUp="ToDoTask_OnMouseUp">
+
+    <materialDesign:Card Padding="16">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding Header}"/>
+
+            <Grid Grid.Row="2" Margin="0 20px 0 0">
+                <WrapPanel HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding Type}"/>
+                    <TextBlock Text="{Binding Name}" Margin="10px 0 0 0"/>
+                    <TextBlock Text="{Binding Priority}" Margin="10px 0 0 0"/>
+                </WrapPanel>
+
+                <WrapPanel HorizontalAlignment="Right">
+                    <TextBlock Text="{Binding TimeLimit}"/>
+                </WrapPanel>
+            </Grid>
+        </Grid>
+    </materialDesign:Card>
+</UserControl>
